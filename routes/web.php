@@ -15,6 +15,4 @@ use App\Http\Controllers\users\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/search', function () {
-    return view('search');
-});
+Route::get('/search', [HomeController::class, 'search'])->name('search');

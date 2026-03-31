@@ -8,10 +8,12 @@
         </div>
         
         <div class="header__center">
-            <div class="search-box">
-                <input type="text" placeholder="Tìm công thức hoặc video nấu ăn...">
-                <a href="{{'/search'}}"><button class="search-btn">🔍</button></a>
-            </div>
+            <!-- Chú thích: Sử dụng thẻ form để gửi dữ liệu tìm kiếm (từ khóa q) qua phương thức GET -->
+            <form action="{{ route('search') }}" method="GET" class="search-box">
+                <!-- Chú thích: Ô nhập liệu tìm kiếm, lưu lại giá trị cũ nếu người dùng vừa tìm -->
+                <input type="text" name="q" placeholder="Tìm công thức hoặc video nấu ăn..." value="{{ request('q') }}">
+                <button type="submit" class="search-btn">🔍</button>
+            </form>
         </div>
         
         <div class="header__right">

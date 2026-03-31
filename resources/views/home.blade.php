@@ -9,43 +9,37 @@
             
             <!-- CHIPS -->
             <div class="chips">
-                <div class="chip active">Tất cả</div>
-                <div class="chip">Món Việt</div>
-                <div class="chip">Món Âu</div>
-                <div class="chip">Ăn vặt</div>
-                <div class="chip">Healthy</div>
-                <div class="chip">Video mới</div>
-                <div class="chip">Nước chấm</div>
-                <div class="chip">Chay ngon</div>
-                <div class="chip">BBQ</div>
+                <a href="{{ route('search') }}" class="chip active">Tất cả</a>
+                <a href="{{ route('search', ['q' => 'Món Việt']) }}" class="chip">Món Việt</a>
+                <a href="{{ route('search', ['q' => 'Món Âu']) }}" class="chip">Món Âu</a>
+                <a href="{{ route('search', ['q' => 'Ăn vặt']) }}" class="chip">Ăn vặt</a>
+                <a href="{{ route('search', ['q' => 'Healthy']) }}" class="chip">Healthy</a>
+                <a href="{{ route('search', ['q' => 'chay']) }}" class="chip">Chay ngon</a>
+                <a href="{{ route('search', ['q' => 'nước chấm']) }}" class="chip">Nước chấm</a>
+                <a href="{{ route('search', ['q' => 'BBQ']) }}" class="chip">BBQ</a>
+                <a href="{{ route('search', ['q' => 'Mới nhất']) }}" class="chip">Video mới</a>
+                <a href="{{ route('search', ['q' => 'Xu hướng']) }}" class="chip">Xu hướng</a>
             </div>
             
             <!-- GRID 1 HÀNG 4 CÁI -->
             <div class="video-grid">
                 
-                <!-- Video 1 -->
+                <!-- Video Danh sách -->
             @foreach($video as $v)
                 <div class="video-card">
                     <div class="thumbnail">
-                        <img src="https://picsum.photos/id/201/600/400" alt="">
-                        <span class="duration">{{$v->duration ?? '00:00:00'}}</span>
+                        <img src="{{ $v->thumbnail }}" alt="{{ $v->title }}">
+                        <span class="duration">{{ $v->duration ?? '10:00' }}</span>
                     </div>
                     <div class="video-info">
-                        <div class="channel-avatar">Food</div>
+                        <div class="channel-avatar">P</div>
                         <div class="video-details">
-                            <h3>{{$v->title}}</h3>
-                            <p>PolyFood</p>
-                            <p>{{$v->Views}} lượt xem • {{$v->create_at}}</p>
+                            <h3>{{ $v->title }}</h3>
+                            <p>PolyFood • {{ number_format($v->views) }} lượt xem</p>
                         </div>
                     </div>
                 </div>
-            @endforeach
-
-
-
-
-
-                
+            @endforeach         
                 
             </div>
         </div>
