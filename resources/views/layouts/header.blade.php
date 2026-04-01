@@ -34,7 +34,11 @@
                         <p style="margin: 0; color: #aaa; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ Auth::user()->email }}</p>
                     </div>
                     
+<<<<<<< HEAD
                     <a href="{{ route('profile') }}" style="display: block; padding: 10px 20px; color: #ddd; text-decoration: none; font-size: 14px; transition: 0.2s;" onmouseover="this.style.background='#3f3f3f'; this.style.color='#fff'" onmouseout="this.style.background='transparent'; this.style.color='#ddd'">
+=======
+                    <a href="{{ route('profile.edit') }}" style="display: block; padding: 10px 20px; color: #ddd; text-decoration: none; font-size: 14px; transition: 0.2s;" onmouseover="this.style.background='#3f3f3f'; this.style.color='#fff'" onmouseout="this.style.background='transparent'; this.style.color='#ddd'">
+>>>>>>> 7ff808b13b4bb91e0aea268c5669f62f91580133
                         👤 Hồ sơ cá nhân
                     </a>
                     

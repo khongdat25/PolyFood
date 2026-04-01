@@ -21,7 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+<<<<<<< HEAD
         'avatar',
+=======
+>>>>>>> 7ff808b13b4bb91e0aea268c5669f62f91580133
     ];
 
     /**
@@ -43,8 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+<<<<<<< HEAD
     public function videos()
     {
         return $this->hasMany(Video::class);
     }
+=======
+>>>>>>> 7ff808b13b4bb91e0aea268c5669f62f91580133
 }

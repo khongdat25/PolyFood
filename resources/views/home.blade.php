@@ -26,6 +26,7 @@
                 
                 <!-- Video Danh sách -->
             @foreach($video as $v)
+<<<<<<< HEAD
                 <div class="video-card" style="position:relative;">
                     <a href="{{ route('videos.show', $v->id) }}" style="text-decoration:none; color:inherit; display:block;">
                         <div class="thumbnail">
@@ -98,6 +99,18 @@
                                     ⬇️ Tải xuống
                                 </a>
                             </div>
+=======
+                <div class="video-card">
+                    <div class="thumbnail">
+                        <img src="{{ $v->thumbnail }}" alt="{{ $v->title }}">
+                        <span class="duration">{{ $v->duration ?? '10:00' }}</span>
+                    </div>
+                    <div class="video-info">
+                        <div class="channel-avatar">P</div>
+                        <div class="video-details">
+                            <h3>{{ $v->title }}</h3>
+                            <p>PolyFood • {{ number_format($v->views) }} lượt xem</p>
+>>>>>>> 7ff808b13b4bb91e0aea268c5669f62f91580133
                         </div>
                     </div>
                 </div>
@@ -106,6 +119,7 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 
 <style>
 .video-card:hover .menu-trigger { opacity: 1 !important; transform: translateY(-4px); }
@@ -140,4 +154,6 @@ document.addEventListener('click', function(e) {
     }
 });
 </script>
+=======
+>>>>>>> 7ff808b13b4bb91e0aea268c5669f62f91580133
 @endsection
