@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     function index(){
-<<<<<<< HEAD
+
         $video= Video::with('user')->orderBy('id', 'desc')->get();
-=======
+
         $video= Video::all();
->>>>>>> 7ff808b13b4bb91e0aea268c5669f62f91580133
+
         foreach ($video as $v) {
             $v->duration = VideoHelper::getDurationFromUrl($v->video_url);
         }
@@ -30,12 +30,10 @@ class HomeController extends Controller
         $q = $request->input('q');
 
         // 2. Tìm kiếm trong bảng video với điều kiện tiêu đề giống với từ khóa
-<<<<<<< HEAD
-        $videos = Video::with('user')->where('title', 'like', "%{$q}%")->orderBy('id', 'desc')->get();
-=======
-        $videos = Video::where('title', 'like', "%{$q}%")->get();
->>>>>>> 7ff808b13b4bb91e0aea268c5669f62f91580133
 
+        $videos = Video::with('user')->where('title', 'like', "%{$q}%")->orderBy('id', 'desc')->get();
+
+        $videos = Video::where('title', 'like', "%{$q}%")->get();
         // 3. Xử lý tính toán thời lượng video cho từng kết quả tìm được
         foreach ($videos as $v) {
             $v->duration = VideoHelper::getDurationFromUrl($v->video_url);

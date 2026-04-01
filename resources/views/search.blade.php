@@ -26,7 +26,7 @@
             @if(isset($videos) && $videos->count() > 0)
                 <!-- Chú thích: Vòng lặp foreach duyệt qua từng bản ghi video lấy ra từ cơ sở dữ liệu -->
                 @foreach($videos as $video)
-<<<<<<< HEAD
+
                 <div class="video-card" style="position:relative;">
                     <a href="{{ route('videos.show', $video->id) }}" style="text-decoration:none; color:inherit; display:block;">
                         <div class="thumbnail">
@@ -98,21 +98,6 @@
                                     ⬇️ Tải xuống
                                 </a>
                             </div>
-=======
-                <div class="video-card">
-                    <div class="thumbnail">
-                        <img src="{{ $video->thumbnail }}" alt="{{ $video->title }}">
-                        <span class="duration">{{ $video->duration ?? '10:00' }}</span>
-                    </div>
-                    <div class="video-info">
-                        <!-- Chú thích: Hiển thị avatar mặc định P (PolyFood) -->
-                        <div class="channel-avatar">P</div>
-                        <div class="video-details">
-                            <!-- Chú thích: Tiêu đề video (title) -->
-                            <h3>{{ $video->title }}</h3>
-                            <!-- Chú thích: Số lượt xem (views) -->
-                            <p>PolyFood • {{ number_format($video->views) }} lượt xem</p>
->>>>>>> 7ff808b13b4bb91e0aea268c5669f62f91580133
                         </div>
                     </div>
                 </div>
@@ -126,7 +111,7 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
+
 
 <style>
 .video-card:hover .menu-trigger { opacity: 1 !important; transform: translateY(-4px); }
@@ -161,7 +146,5 @@ document.addEventListener('click', function(e) {
     }
 });
 </script>
-@endsection
-=======
     @endsection
->>>>>>> 7ff808b13b4bb91e0aea268c5669f62f91580133
+
