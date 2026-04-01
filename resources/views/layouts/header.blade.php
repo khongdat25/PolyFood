@@ -76,7 +76,7 @@
         <!-- SIDEBAR TRÁI -->
         <aside class="sidebar">
             <div class="sidebar-item active"><i>🏠</i> Trang chủ</div>
-            <div class="sidebar-item"><i>🔥</i> Bài viết</div>
+            <a href="/category"><div class="sidebar-item"><i>🔥</i> Bài viết</div></a>
             <div class="sidebar-item"><i>❤️</i> Đã thích</div>
             <div class="sidebar-item"><i>📜</i> Lịch sử xem</div>
         </aside>
