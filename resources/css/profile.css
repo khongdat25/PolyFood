@@ -1,0 +1,50 @@
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #f97316; /* Màu chính Polyfood - cam ấm cho ẩm thực */
+        }
+        
+        * {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .cover-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://picsum.photos/id/1015/1920/300');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .video-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .video-card:hover img {
+            transform: scale(1.08);
+        }
+        
+        .thumbnail-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .nav-tab {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 9999px;
+        }
