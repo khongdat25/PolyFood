@@ -16,11 +16,11 @@ class HomeController extends Controller
         $videoByCate = Video::with('user', 'category')->get();
         $category = Category::all();
         foreach ($video as $v) {
-            $v->duration = VideoHelper::getDuration($v->video_url);
+            $v->duration = VideoHelper::getDurationFromUrl($v->video_url);
              $v->time_ago = Carbon::parse($v->create_at)->diffForHumans();
         }
          foreach ($new as $v) {
-        $v->duration = VideoHelper::getDuration($v->video_url);
+        $v->duration = VideoHelper::getDurationFromUrl($v->video_url);
         $v->time_ago = Carbon::parse($v->create_at)->diffForHumans();
     }
         return view('home', compact('video', 'category', 'new', 'videoByCate'));
@@ -42,7 +42,7 @@ class HomeController extends Controller
         $videos = Video::where('title', 'like', "%{$q}%")->get();
         // 3. Xử lý tính toán thời lượng video cho từng kết quả tìm được
         foreach ($videos as $v) {
-            $v->duration = VideoHelper::getDuration($v->video_url);
+            $v->duration = VideoHelper::getDurationFromUrl($v->video_url);
         }
 
         // 4. Trả kết quả về giao diện tìm kiếm (view)
