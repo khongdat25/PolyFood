@@ -208,13 +208,11 @@ document.querySelectorAll('.chip[data-category]').forEach(chip => {
 
         const filtered = videoByCate.filter(v => v.category_id == cateId);
 
-        // ❌ Ẩn home
         document.getElementById('news').style.display = 'none';
         document.getElementById('video-list').style.display = 'none';
         document.getElementById('title-news').style.display = 'none';
         document.getElementById('title-random').style.display = 'none';
 
-        // ✅ Hiện cate
         document.getElementById('video-by-cate').style.display = 'grid';
         document.getElementById('title-cate').style.display = 'block';
 
