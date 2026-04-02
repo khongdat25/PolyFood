@@ -81,7 +81,6 @@
             display: flex;
             gap: 12px;
             align-items: flex-start; /* YouTube căn avatar ở top */
-            padding-right: 24px; /* Giữ khoảng trống bên phải title như youtube */
         }
         
         .channel-avatar {

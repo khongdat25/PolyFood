@@ -16,7 +16,7 @@
             </form>
         </div>
         
-        <div class="header__right">
+        <div class="header__right" style="width: 100%">
             <i>🎥</i>
             <i>🛎️</i>
             <i>📺</i>

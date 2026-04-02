@@ -4,20 +4,26 @@ namespace App\Http\Controllers\users;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Video;
+use App\Models\Category;
+use Carbon\Carbon;
 use App\Helpers\VideoHelper;
 use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     function index(){
-
-        $video= Video::with('user')->orderBy('id', 'desc')->get();
-
-        $video= Video::all();
-
+        $new= Video::orderBy('create_at', 'desc')->limit(5)->get();
+        $video= Video::inRandomOrder()->get();
+        $videoByCate = Video::with('user', 'category')->get();
+        $category = Category::all();
         foreach ($video as $v) {
-            $v->duration = VideoHelper::getDurationFromUrl($v->video_url);
+            $v->duration = VideoHelper::getDuration($v->video_url);
+             $v->time_ago = Carbon::parse($v->create_at)->diffForHumans();
         }
-        return view('home', compact('video'));
+         foreach ($new as $v) {
+        $v->duration = VideoHelper::getDuration($v->video_url);
+        $v->time_ago = Carbon::parse($v->create_at)->diffForHumans();
+    }
+        return view('home', compact('video', 'category', 'new', 'videoByCate'));
     }
 
     /**
@@ -36,7 +42,7 @@ class HomeController extends Controller
         $videos = Video::where('title', 'like', "%{$q}%")->get();
         // 3. Xử lý tính toán thời lượng video cho từng kết quả tìm được
         foreach ($videos as $v) {
-            $v->duration = VideoHelper::getDurationFromUrl($v->video_url);
+            $v->duration = VideoHelper::getDuration($v->video_url);
         }
 
         // 4. Trả kết quả về giao diện tìm kiếm (view)
