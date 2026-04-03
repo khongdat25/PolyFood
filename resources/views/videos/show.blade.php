@@ -32,9 +32,20 @@
                     @endif
                     <div class="channel-details">
                         <span class="channel-name" onclick="location.href='{{ route('channel', $video->user->id ?? 1) }}'">{{ $video->user->name ?? 'PolyFood' }}</span>
-                        <span class="subscriber-count">{{ number_format($video->user->videos()->sum('views') ?? 0) }} lượt xem kênh</span>
+                        <span class="subscriber-count" id="subscriber-count">{{ number_format($video->user->subscribers()->count()) }} lượt đăng ký</span>
                     </div>
-                    <button class="subscribe-btn" onclick="alert('Tính năng Đăng ký sẽ sớm ra mắt!')">Đăng ký</button>
+                    
+                    @if(Auth::check() && Auth::id() !== $video->user_id)
+                        @php $isSubscribed = Auth::user()->isSubscribedTo($video->user_id); @endphp
+                        <button class="subscribe-btn {{ $isSubscribed ? 'subscribed' : '' }}" 
+                                id="btn-subscribe" 
+                                data-id="{{ $video->user_id }}"
+                                style="{{ $isSubscribed ? 'background:#3f3f3f; color:#fff;' : '' }}">
+                            {{ $isSubscribed ? 'Đã đăng ký' : 'Đăng ký' }}
+                        </button>
+                    @elseif(!Auth::check())
+                        <button class="subscribe-btn" onclick="location.href='{{ route('login') }}'">Đăng ký</button>
+                    @endif
                 </div>
 
                 <div class="action-buttons">
@@ -83,12 +94,49 @@
 
 <script>
     // YouTube style autoplay is usually blocked unless muted or interacted with.
-    // We have 'autoplay' in the tag, but we can ensure it tries to play.
     document.addEventListener('DOMContentLoaded', function() {
-        const video = document.querySelector('video');
+        const video = document.getElementById('main-video');
         if (video) {
             video.play().catch(error => {
                 console.log("Autoplay was prevented by the browser. Interaction required.");
+            });
+        }
+
+        // Subscription Toggle
+        const btnSubscribe = document.getElementById('btn-subscribe');
+        if (btnSubscribe) {
+            btnSubscribe.addEventListener('click', function() {
+                const channelId = this.dataset.id;
+                
+                fetch(`/subscribe/${channelId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'subscribed') {
+                        this.innerText = 'Đã đăng ký';
+                        this.classList.add('subscribed');
+                        this.style.background = '#3f3f3f';
+                        this.style.color = '#fff';
+                    } else if (data.status === 'unsubscribed') {
+                        this.innerText = 'Đăng ký';
+                        this.classList.remove('subscribed');
+                        this.style.background = '#f1f1f1';
+                        this.style.color = '#0f0f0f';
+                    }
+                    
+                    if (data.subscribersCount !== undefined) {
+                        document.getElementById('subscriber-count').innerText = data.subscribersCount + ' lượt đăng ký';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Đã có lỗi xảy ra. Vui lòng thử lại sau.');
+                });
             });
         }
     });

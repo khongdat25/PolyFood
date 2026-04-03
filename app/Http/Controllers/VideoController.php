@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\VideoHelper;
 use Carbon\Carbon;
+use App\Notifications\NewVideoNotification;
+use Illuminate\Support\Facades\Notification;
 
 class VideoController extends Controller
 {
@@ -111,7 +113,7 @@ class VideoController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
-        Video::create([
+        $video = Video::create([
             'title'       => $request->title,
             'description' => $request->description,
             'video_url'   => $videoPath,
@@ -121,6 +123,12 @@ class VideoController extends Controller
             'create_at'   => now()->format('Y-m-d H:i:s'),
             'views'       => 0,
         ]);
+
+        // Thông báo cho tất cả người đăng ký
+        $user = Auth::user();
+        if ($user->subscribers()->count() > 0) {
+            Notification::send($user->subscribers, new NewVideoNotification($video));
+        }
 
         return redirect()->route('profile')->with('success', 'Video đã được đăng thành công!');
     }

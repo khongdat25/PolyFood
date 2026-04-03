@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/edit', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/edit', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Subscribe toggle
+    Route::post('/subscribe/{id}', [\App\Http\Controllers\SubscriptionController::class, 'toggle'])->name('subscribe.toggle');
 });
 
 Route::get('/videos/{video}', [VideoController::class, 'show'])->name('videos.show');

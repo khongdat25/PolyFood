@@ -81,10 +81,20 @@
                                 </div>`
                             }
 
-                            <div class="video-details">
-                                <h3>${v.title}</h3>
-                                <p>${v.user?.name ?? 'PolyFood'}</p>
-                                <p>${Number(v.views ?? 0).toLocaleString()} lượt xem ${v.time_ago ?? ''} </p>
+                            <div class="video-details" style="flex:1; min-width:0;">
+                                <a href="/videos/${v.id}" style="text-decoration:none; color:inherit;">
+                                    <h3 style="font-size:16px; font-weight:600; margin:0 0 6px; color:#fff; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.4;">
+                                        ${v.title}
+                                    </h3>
+                                </a>
+                                <div style="display:flex; flex-direction:column; gap:2px;">
+                                    <a href="/channel/${v.user?.id ?? 1}" style="text-decoration:none; color:#aaa; font-size:14px; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">
+                                        ${v.user?.name ?? 'PolyFood'}
+                                    </a>
+                                    <p style="margin:0; color:#aaa; font-size:14px;">
+                                        ${Number(v.views ?? 0).toLocaleString()} lượt xem • ${v.time_ago ?? ''}
+                                    </p>
+                                </div>
                             </div>
                         </div>
 

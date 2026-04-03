@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     function index(){
-        $new= Video::orderBy('create_at', 'desc')->limit(5)->get();
-        $video= Video::inRandomOrder()->get();
+        $new= Video::with('user')->orderBy('create_at', 'desc')->limit(5)->get();
+        $video= Video::with('user')->inRandomOrder()->get();
         $videoByCate = Video::with('user', 'category')->get();
         $category = Category::where('status', 1)->get();
         foreach ($video as $v) {
@@ -36,13 +36,12 @@ class HomeController extends Controller
         $q = $request->input('q');
 
         // 2. Tìm kiếm trong bảng video với điều kiện tiêu đề giống với từ khóa
-
         $videos = Video::with('user')->where('title', 'like', "%{$q}%")->orderBy('id', 'desc')->get();
 
-        $videos = Video::where('title', 'like', "%{$q}%")->get();
         // 3. Xử lý tính toán thời lượng video cho từng kết quả tìm được
         foreach ($videos as $v) {
             $v->duration = VideoHelper::getDurationFromUrl($v->video_url);
+            $v->time_ago = $v->create_at ? Carbon::parse($v->create_at)->diffForHumans() : '';
         }
 
         // 4. Trả kết quả về giao diện tìm kiếm (view)

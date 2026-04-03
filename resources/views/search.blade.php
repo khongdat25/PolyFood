@@ -45,15 +45,23 @@
                             @else
                                 <div class="channel-avatar" style="cursor:pointer;" onclick="location.href='{{ route('channel', $video->user->id ?? 1) }}'">{{ substr($video->user->name ?? 'P', 0, 1) }}</div>
                             @endif
-                            <div class="video-details" style="flex:1;">
+                            <div class="video-details" style="flex:1; min-width:0;">
                                 <a href="{{ route('videos.show', $video->id) }}" style="text-decoration:none; color:inherit;">
-                                    <h3 style="margin-bottom:4px; margin-right:20px;">{{ $video->title }}</h3>
+                                    <h3 style="font-size:16px; font-weight:600; margin:0 0 4px; color:#fff; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.4;">
+                                        {{ $video->title }}
+                                    </h3>
                                 </a>
-                                <p style="cursor:pointer;" onclick="location.href='{{ route('channel', $video->user->id ?? 1) }}'">{{ $video->user->name ?? 'PolyFood' }}</p>
-                                <p>{{ number_format($video->views ?? 0) }} lượt xem</p>
-                                @if($video->create_at)
-                                    <p style="font-size: 12px; color: #aaa; margin-top: 2px;">{{ \Carbon\Carbon::parse($video->create_at)->format('d/m/Y H:i') }}</p>
-                                @endif
+                                <div style="display:flex; flex-direction:column; gap:2px;">
+                                    <a href="{{ route('channel', $video->user->id ?? 1) }}" style="text-decoration:none; color:#aaa; font-size:14px; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">
+                                        {{ $video->user->name ?? 'PolyFood' }}
+                                    </a>
+                                    <p style="margin:0; color:#aaa; font-size:13px;">
+                                        {{ number_format($video->views ?? 0) }} lượt xem
+                                        @if($video->create_at)
+                                            • {{ \Carbon\Carbon::parse($video->create_at)->diffForHumans() }}
+                                        @endif
+                                    </p>
+                                </div>
                             </div>
                         </div>
 

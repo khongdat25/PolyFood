@@ -49,4 +49,28 @@ class User extends Authenticatable
     {
         return $this->hasMany(Video::class);
     }
+
+    /**
+     * Những người đang đăng ký kênh này
+     */
+    public function subscribers()
+    {
+        return $this->belongsToMany(User::class, 'subscriptions', 'channel_id', 'subscriber_id')->withTimestamps();
+    }
+
+    /**
+     * Những kênh mà người này đang đăng ký
+     */
+    public function subscriptions()
+    {
+        return $this->belongsToMany(User::class, 'subscriptions', 'subscriber_id', 'channel_id')->withTimestamps();
+    }
+
+    /**
+     * Kiểm tra xem đã đăng ký kênh nào đó chưa
+     */
+    public function isSubscribedTo($channelId)
+    {
+        return $this->subscriptions()->where('channel_id', $channelId)->exists();
+    }
 }
