@@ -38,17 +38,17 @@ Route::middleware('auth')->group(function () {
     // Avatar upload
     Route::post('/profile/avatar', [VideoController::class, 'updateAvatar'])->name('profile.avatar');
 
-    // Video CRUD
-    Route::resource('videos', VideoController::class)->except(['index']);
-
-    // Public channel profile
-    Route::get('/channel/{id}', [VideoController::class, 'channel'])->name('channel');
+    // Video CRUD (excluding show which is public now)
+    Route::resource('videos', VideoController::class)->except(['index', 'show']);
 
     // Legacy profile edit (keep for header link compatibility)
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/edit', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/edit', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/videos/{video}', [VideoController::class, 'show'])->name('videos.show');
+Route::get('/channel/{id}', [VideoController::class, 'channel'])->name('channel');
 Route::get('/category', function () {
     return view('admin.category.index');
 });

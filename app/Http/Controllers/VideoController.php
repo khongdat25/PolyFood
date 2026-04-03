@@ -6,6 +6,8 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Helpers\VideoHelper;
+use Carbon\Carbon;
 
 class VideoController extends Controller
 {
@@ -32,7 +34,28 @@ class VideoController extends Controller
     {
         // Tăng lượt xem
         $video->increment('views');
-        return view('videos.show', compact('video'));
+
+        // Lấy video liên quan (cùng danh mục, loại trừ video hiện tại)
+        $relatedVideos = Video::with('user')
+            ->where('category_id', $video->category_id)
+            ->where('id', '!=', $video->id)
+            ->limit(10)
+            ->get();
+
+        // Xử lý duration và time_ago cho video liên quan
+        foreach ($relatedVideos as $v) {
+            // Giả định video_url là đường dẫn trong storage/public
+            $fullPath = public_path('storage/' . $v->video_url);
+            if (file_exists($fullPath)) {
+                $v->duration = VideoHelper::getDurationFromUrl($fullPath);
+            }
+            $v->time_ago = $v->create_at ? Carbon::parse($v->create_at)->diffForHumans() : '';
+        }
+
+        // Tải thêm quan hệ cho video hiện tại
+        $video->load('user', 'category');
+
+        return view('videos.show', compact('video', 'relatedVideos'));
     }
 
     /**

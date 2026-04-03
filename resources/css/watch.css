@@ -1,0 +1,241 @@
+/* YouTube-inspired Video Player Page */
+:root {
+    --bg-main: #0f0f0f;
+    --sidebar-width: 320px;
+    --text-primary: #f1f1f1;
+    --text-secondary: #aaa;
+    --card-bg: #272727;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.watch-container {
+    display: flex;
+    max-width: 1700px;
+    margin: 0 auto;
+    padding: 24px;
+    gap: 24px;
+}
+
+/* Main Content (Player) */
+.main-column {
+    flex: 1;
+    min-width: 0; /* Prevent flex overflow */
+}
+
+.video-player-container {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.video-player-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.video-metadata {
+    margin-top: 20px;
+}
+
+.video-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.video-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #3f3f3f;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+}
+
+.channel-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.channel-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.channel-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.channel-name {
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.subscriber-count {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.subscribe-btn {
+    background-color: #f1f1f1;
+    color: #0f0f0f;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: background 0.2s;
+}
+
+.subscribe-btn:hover {
+    background-color: #d9d9d9;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    background-color: #272727;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.action-btn:hover {
+    background-color: #3f3f3f;
+}
+
+/* Description Box */
+.description-box {
+    background-color: #272727;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.stats {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.description-text {
+    white-space: pre-wrap;
+    color: var(--text-primary);
+}
+
+/* Sidebar (Related Videos) */
+.side-column {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+}
+
+.side-column h3 {
+    font-size: 16px;
+    margin: 0 0 16px 0;
+}
+
+.related-video-card {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.1s;
+}
+
+.related-video-card:hover {
+    transform: scale(1.02);
+}
+
+.related-thumbnail {
+    width: 160px;
+    height: 90px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+}
+
+.related-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.related-duration {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.related-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.related-title {
+    font-size: 14px;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.related-channel, .related-stats {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Responsiveness */
+@media (max-width: 1000px) {
+    .watch-container {
+        flex-direction: column;
+        padding: 0;
+    }
+    .side-column {
+        width: 100%;
+        padding: 16px;
+    }
+    .main-column {
+        padding: 16px;
+    }
+}
