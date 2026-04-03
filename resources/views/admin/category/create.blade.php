@@ -43,9 +43,10 @@
             <a href="#" class="nav-item flex items-center gap-4 px-5 py-4 rounded-3xl text-lg font-medium">
                 <i class="fa-solid fa-video w-6"></i><span>Video</span>
             </a>
-            <a href="#" class="nav-item active flex items-center gap-4 px-5 py-4 rounded-3xl text-lg font-medium">
+            <a href="{{ route('category.index') }}" class="nav-item active flex items-center gap-4 px-5 py-4 rounded-3xl text-lg font-medium">
                 <i class="fa-solid fa-list-ul w-6"></i><span>Danh mục</span>
             </a>
+
             <a href="#" class="nav-item flex items-center gap-4 px-5 py-4 rounded-3xl text-lg font-medium">
                 <i class="fa-solid fa-users w-6"></i><span>User</span>
             </a>
@@ -76,12 +77,19 @@
 
             <!-- FORM CARD (đã bỏ Mô tả & Màu sắc) -->
             <div class="form-card bg-[#272727] rounded-3xl p-10">
-                <form action="#" method="POST" class="space-y-8">
+                <form action="{{ route('category.store') }}" method="POST" class="space-y-8">
+                    @csrf
                     
-                    <!-- Tên danh mục -->
                     <div>
                         <label class="block text-sm font-medium text-zinc-400 mb-2">Tên danh mục <span class="text-red-400">*</span></label>
-                        <input type="text" placeholder="Ví dụ: Món Việt Nam" 
+                        <input type="text" name="name" id="name" onkeyup="ChangeToSlug()" placeholder="Ví dụ: Món Việt Nam" required
+                               class="input-focus w-full bg-[#18181b] border border-zinc-700 rounded-2xl px-6 py-4 text-white focus:outline-none text-lg">
+                    </div>
+
+                    <!-- Slug -->
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-400 mb-2">Slug (đường dẫn)</label>
+                        <input type="text" name="slug" id="slug" placeholder="vi-du-mon-viet-nam" 
                                class="input-focus w-full bg-[#18181b] border border-zinc-700 rounded-2xl px-6 py-4 text-white focus:outline-none text-lg">
                     </div>
 
@@ -126,6 +134,21 @@
 
     <script>
         tailwind.config = { theme: { extend: {} } }
+
+        function ChangeToSlug() {
+            var name = document.getElementById("name").value;
+            var slug = name.toLowerCase();
+            // Xóa dấu tiếng Việt
+            slug = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            slug = slug.replace(/đ/g, 'd').replace(/Đ/g, 'd');
+            // Xóa ký tự đặc biệt
+            slug = slug.replace(/([^0-9a-z-\s])/g, '');
+            // Thay khoảng trắng thành dấu gạch ngang
+            slug = slug.replace(/(\s+)/g, '-');
+            slug = slug.replace(/-+/g, '-');
+            slug = slug.replace(/^-+|-+$/g, '');
+            document.getElementById('slug').value = slug;
+        }
     </script>
 </body>
 </html>

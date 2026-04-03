@@ -37,9 +37,10 @@
             <a href="#" class="nav-item flex items-center gap-4 px-5 py-4 rounded-3xl text-lg font-medium">
                 <i class="fa-solid fa-video w-6"></i><span>Video</span>
             </a>
-            <a href="#" class="nav-item active flex items-center gap-4 px-5 py-4 rounded-3xl text-lg font-medium">
+            <a href="{{ route('category.index') }}" class="nav-item active flex items-center gap-4 px-5 py-4 rounded-3xl text-lg font-medium">
                 <i class="fa-solid fa-list-ul w-6"></i><span>Danh mục</span>
             </a>
+
             <a href="#" class="nav-item flex items-center gap-4 px-5 py-4 rounded-3xl text-lg font-medium">
                 <i class="fa-solid fa-users w-6"></i><span>User</span>
             </a>
@@ -62,21 +63,29 @@
                     </button>
                     <div>
                         <h1 class="text-4xl font-semibold">Sửa danh mục</h1>
-                        <p class="text-zinc-400">Chỉnh sửa thông tin danh mục “Món Việt”</p>
+                        <p class="text-zinc-400">Chỉnh sửa thông tin danh mục “{{ $category->name }}”</p>
                     </div>
                 </div>
-                <div class="text-sm bg-emerald-500/10 text-emerald-400 px-4 py-2 rounded-3xl flex items-center gap-2">
-                    <i class="fa-solid fa-circle-check"></i> Đang hoạt động
+                <div class="text-sm {{ $category->status ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400' }} px-4 py-2 rounded-3xl flex items-center gap-2">
+                    <i class="fa-solid {{ $category->status ? 'fa-circle-check' : 'fa-circle-xmark' }}"></i> {{ $category->status ? 'Đang hoạt động' : 'Đang ẩn' }}
                 </div>
             </div>
 
             <div class="form-card bg-[#272727] rounded-3xl p-10">
-                <form action="#" method="POST" class="space-y-8">
+                <form action="{{ route('category.update', $category->id) }}" method="POST" class="space-y-8">
+                    @csrf
+                    @method('PUT')
                     
-                    <!-- Tên danh mục -->
                     <div>
                         <label class="block text-sm font-medium text-zinc-400 mb-2">Tên danh mục <span class="text-red-400">*</span></label>
-                        <input type="text" value="Món Việt" 
+                        <input type="text" name="name" id="name" onkeyup="ChangeToSlug()" value="{{ $category->name }}" required
+                               class="input-focus w-full bg-[#18181b] border border-zinc-700 rounded-2xl px-6 py-4 text-white focus:outline-none text-lg">
+                    </div>
+
+                    <!-- Slug -->
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-400 mb-2">Slug (đường dẫn)</label>
+                        <input type="text" name="slug" id="slug" value="{{ $category->slug }}" placeholder="vi-du-mon-viet-nam" 
                                class="input-focus w-full bg-[#18181b] border border-zinc-700 rounded-2xl px-6 py-4 text-white focus:outline-none text-lg">
                     </div>
 
@@ -84,7 +93,7 @@
                     <div>
                         <label class="block text-sm font-medium text-zinc-400 mb-2">Icon / Emoji</label>
                         <div class="flex gap-4 items-center">
-                            <input type="text" value="🍲" maxlength="2"
+                            <input type="text" name="icon" value="{{ $category->icon }}" maxlength="2"
                                    class="input-focus w-16 text-center text-5xl bg-[#18181b] border border-zinc-700 rounded-2xl px-4 py-3 focus:outline-none">
                             <button onclick="this.previousElementSibling.value = prompt('Nhập emoji mới:', '🍲'); return false;" 
                                     class="px-6 py-3 bg-[#18181b] hover:bg-[#FF6B00] hover:text-black rounded-2xl text-sm font-medium transition">Đổi emoji</button>
@@ -121,6 +130,21 @@
 
     <script>
         tailwind.config = { theme: { extend: {} } }
+
+        function ChangeToSlug() {
+            var name = document.getElementById("name").value;
+            var slug = name.toLowerCase();
+            // Xóa dấu tiếng Việt
+            slug = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            slug = slug.replace(/đ/g, 'd').replace(/Đ/g, 'd');
+            // Xóa ký tự đặc biệt
+            slug = slug.replace(/([^0-9a-z-\s])/g, '');
+            // Thay khoảng trắng thành dấu gạch ngang
+            slug = slug.replace(/(\s+)/g, '-');
+            slug = slug.replace(/-+/g, '-');
+            slug = slug.replace(/^-+|-+$/g, '');
+            document.getElementById('slug').value = slug;
+        }
     </script>
 </body>
 </html>

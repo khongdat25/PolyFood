@@ -14,7 +14,7 @@ class HomeController extends Controller
         $new= Video::orderBy('create_at', 'desc')->limit(5)->get();
         $video= Video::inRandomOrder()->get();
         $videoByCate = Video::with('user', 'category')->get();
-        $category = Category::all();
+        $category = Category::where('status', 1)->get();
         foreach ($video as $v) {
             $v->duration = VideoHelper::getDurationFromUrl($v->video_url);
              $v->time_ago = Carbon::parse($v->create_at)->diffForHumans();

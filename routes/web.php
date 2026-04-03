@@ -60,3 +60,14 @@ Route::get('/category/edit', function () {
 });
 
 require __DIR__ . '/auth.php';
+use App\Http\Controllers\CategoryController;
+
+// Thay thế các route cũ bằng cụm này:
+Route::prefix('category')->group(function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/update/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::patch('/toggle-status/{id}', [CategoryController::class, 'toggleStatus'])->name('category.toggle-status');
+});
